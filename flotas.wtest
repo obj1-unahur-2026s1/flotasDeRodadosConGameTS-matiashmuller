@@ -1,0 +1,44 @@
+import rodados.*
+import dependencias.*
+import colores.*
+
+describe "Test etapa 1" {
+	//Instancio los objetos Dependencia y ChevyCorsa requeridos
+	//Dependencias
+	const deportes = new Dependencia( cantidadDeEmpleados = 45 )
+	const cultura = new Dependencia( cantidadDeEmpleados = 31 )
+
+	//Chevy
+	const cachito = new ChevyCorsa( color = rojo )
+	
+	method initialize() {
+		//Armo listas que luego paso como argumento, por prolijidad
+		const rodadosParaDeportes = [ 
+			cachito, //peso 1300
+			new ChevyCorsa( color = azul ), //peso 1300
+			new ChevyCorsa( color = verde ), //peso 1300
+			new RenaultKwid( tieneTanque = true ), //peso 1350
+			new AutoEspecial( capacidad = 5, velocidadMaxima = 160, color = beige, peso = 1200 )
+		]
+
+		//Cambio el estado de la trafic para que quede como pide el enunciado
+		trafic.cambiarInterior(popular)
+		trafic.cambiarMotor(bataton)
+
+		const rodadosParaCultura = [ 
+			cachito, //peso 1300
+			new RenaultKwid( tieneTanque = true ), //peso 1350
+			new RenaultKwid( tieneTanque = true ), //peso 1350
+			new RenaultKwid( tieneTanque = false ), //peso 1200
+			trafic //peso 5500
+		]
+
+		deportes.agregarRodados(rodadosParaDeportes)
+		cultura.agregarRodados(rodadosParaCultura)
+	}
+
+	//Deportes
+  test "El peso total de flota de deportes es 6450" {
+    assert.equals(1300 * 3 + 1350 + 1200, deportes.pesoTotal())
+  }
+}
